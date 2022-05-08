@@ -7,7 +7,7 @@ const ProtectedRoutes = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
   if (isLoading || (!isAuthenticated && router.pathname !== '/auth/login')) {
-    return <LoadingModal title="Loading.s.." />;
+    return <LoadingModal title="Loading..." />;
   }
   return children;
 };

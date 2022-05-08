@@ -38,12 +38,12 @@ function MyApp({ Component, pageProps }) {
       children;
     });
 
-  useEffect(() => {
-    const jssStyle = document.querySelector('#jss-server-side');
-    if (jssStyle) {
-      jssStyle.parentElement.removeChild(jssStyle);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const jssStyle = document.querySelector('#jss-server-side');
+  //   if (jssStyle) {
+  //     jssStyle.parentElement.removeChild(jssStyle);
+  //   }
+  // }, []);
 
   return (
     <ErrorBoundary FallbackComponent={MyFallbackComponent}>

@@ -1,8 +1,25 @@
+import Background from '@/components/Background';
+import Dropdowns from '@/components/Dropdowns';
+import { LoadingModal } from '@/components/Loading';
+import Navbar from '@/components/Navbar';
+import useGetQuery from '@/hooks/useGetQuery';
+import HomeLayout from '@/layout/HomeLayout';
 import Head from 'next/head';
-import Image from 'next/image';
 import styles from '../styles/Home.module.css';
 
 const Home = () => {
+  const { data, isFetching } = useGetQuery(
+    ['locati123ons', '12ist'],
+    '/location?page=0',
+    {
+      onSuccess: (res) => console.log('success', res),
+      onError: (err) => console.log('err', err),
+    }
+  );
+
+  console.log('data', data);
+  if (isFetching) return <LoadingModal />;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -11,63 +28,33 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+      <div className="flex flex-col justify-center items-center">
+        <h1 className="text-xxl-1 font-bold mb-3 text-primary-500">
+          BOOK your seat
         </h1>
+        <h3 className="text-lg-3 font-medium text-primary-300">
+          start find your seat and learn awsome
+        </h3>
+        <h3 className="text-lg-3 font-medium text-primary-300">
+          online classes at UPH Lounge
+        </h3>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
+        <Dropdowns placeholder="Location" Icon={LocationIcon} datas={data}>
+          {datas.map((item) => (
+            <li
+              className="hover:bg-gray-300 cursor-pointer py-4 px-6"
+              onClick={() => handleSelect(item.title)}
+              key={item.id_location}
+            >
+              <a>{item.name_location}</a>
+            </li>
+          ))}
+        </Dropdowns>
+      </div>
     </div>
   );
 };
 
-Home.layout = Home;
+Home.layout = HomeLayout;
 
 export default Home;
