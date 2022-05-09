@@ -23,7 +23,7 @@ const Dropdowns = ({ Icon, placeholder, children, rounded = false }) => {
           // tabIndex="0"
           className={classNames(
             rounded ? 'rounded-full' : 'rounded-[50px]',
-            'flex w-full justify-between items-center px-4 py-4 bg-white border-2  h-full border-shade-BD'
+            'flex w-full justify-between items-center px-4 py-4 bg-white border-2  h-full bg-shade-FG border-shade-BD'
           )}
         >
           {/* {Icon && <Icon className="w-6" fill="#696E76" />} */}

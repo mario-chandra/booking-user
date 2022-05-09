@@ -40,6 +40,33 @@ a {
   .outlined-btn {
     @apply outline outline-1 py-4 px-12 text-sm-4 md:text-md-3 font-medium text-primary-500 hover:bg-shade-BG outline-primary-500;
   }
+  .breadcrumb {
+    @apply flex space-x-2;
+  }
+  /* .checkbox {
+    @apply bg-shade-FG border-gray-700;
+  } */
+  .checked-input {
+    @apply border cursor-pointer border-primary-500 bg-primary-50;
+  }
+  .unchecked-input {
+    @apply border border-shade-BD bg-shade-FG;
+  }
+  .disabled-checkbox {
+    @apply border border-gray-300 bg-shade-BG;
+  }
+}
+
+input:checked ~ .dot {
+  transform: translateX(100%);
+  background-color: #fff !important;
+}
+
+input:checked + .checkbox {
+  @apply border border-primary-500 bg-primary-500  !important;
+}
+input:checked + div .icon {
+  @apply block font-bold text-shade-FG !important;
 }
 
 .loader-dots div {
@@ -86,6 +113,65 @@ a {
   }
 }
 
-.image-height {
-  /* height: calc(100vh - 56px - 76px) !important; */
+.SingleDatePickerInput {
+  height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0px 24px;
+}
+
+.CalendarDay__selected_span {
+  background: #1c2560 !important;
+  color: #f9f9f9 !important;
+  border: 1px solid #999999 !important;
+}
+
+.CalendarDay__selected {
+  background: #777ca0 !important;
+  color: #f9f9f9 !important;
+  border: 1px solid #999999 !important;
+}
+
+.CalendarDay__selected:hover {
+  background: #11163a !important;
+  color: white !important;
+}
+
+.SingleDatePickerInput_calendarIcon {
+  margin: 0 !important;
+  width: 20px;
+  height: 20px;
+  padding: 0 !important;
+  color: #696e76 !important;
+}
+
+.DateInput_input {
+  border-radius: 8px !important;
+  margin: 0 !important;
+  margin-left: 12px !important;
+
+  border: none;
+  box-shadow: none;
+  color: #46494e !important;
+}
+
+.DateInput_input::placeholder {
+  color: #696e76 !important;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 125%;
+}
+
+.DateInput_input__focused {
+  border: none !important;
+}
+
+.SingleDatePickerInput__withBorder {
+  border-radius: 8px !important;
+  overflow: hidden;
+  margin: 0 !important;
+}
+
+.bg-img {
+  background-image: url('../public/images/bg.png');
 }

@@ -9,6 +9,8 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import { AuthProvider } from '@/context/AuthenticationContext';
 import ProtectedRoutes from '@/axios/ProtectedRoutes';
 import { LoadingModal } from '@/components/Loading';
+import 'react-dates/lib/css/_datepicker.css';
+import 'react-dates/initialize';
 
 function MyFallbackComponent({ error, resetErrorBoundary }) {
   return (

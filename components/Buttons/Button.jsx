@@ -5,9 +5,11 @@ const Button = ({
   outlinedClass = 'outlined-btn',
   outlined = false,
   onClick,
+  isDisabled = false,
 }) => {
   return (
     <button
+      disabled={isDisabled}
       className={classNames(
         outlined ? outlinedClass : 'btn',
         'rounded-full self-center duration-300 text-white shadow'

@@ -12,9 +12,10 @@ const Navbar = ({ hasButton = true }) => {
   console.log('r', router.pathname);
   return (
     <div className="z-50 h-nav flex justify-center items-center fixed top-0 left-0 w-full bg-shade-FG shadow-2xl">
-      {router.pathname.includes('/auth') ? (
-        <div className="max-w-[80%] w-full self-center ml-8">
-          <Link href="/dashboard" passHref>
+      {router.pathname.includes('/auth') ||
+      router.pathname.includes('/lounge-location') ? (
+        <div className="max-w-[90%]  w-full self-center ml-8">
+          <Link href="/" passHref>
             <a>
               <Image src={logo} objectFit="fill" />
             </a>
@@ -23,7 +24,7 @@ const Navbar = ({ hasButton = true }) => {
       ) : (
         <>
           <div className="max-w-[80%] w-full self-center ml-8">
-            <Link href="/dashboard" passHref>
+            <Link href="/" passHref>
               <a>
                 <Image src={logo} objectFit="fill" />
               </a>

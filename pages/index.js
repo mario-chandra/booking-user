@@ -1,4 +1,3 @@
-import Background from '@/components/Background';
 import Dropdowns from '@/components/Dropdowns';
 import { LoadingModal } from '@/components/Loading';
 import Navbar from '@/components/Navbar';
@@ -7,6 +6,8 @@ import HomeLayout from '@/layout/HomeLayout';
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import LocationIcon from '@/icons/Fill/Location.svg';
+import { useRouter } from 'next/router';
+import { useAuth } from '@/context/AuthenticationContext';
 
 export const getServerSideProps = ({ req }) => {
   const user = req.cookies.token;
@@ -25,10 +26,27 @@ export const getServerSideProps = ({ req }) => {
 };
 
 const Home = () => {
+  const router = useRouter();
+
+  const { isAuthenticated } = useAuth();
   const { data, isFetching } = useGetQuery(['locationasds'], '/location', {
     onSuccess: (res) => console.log('success', res),
     onError: (err) => console.log('err123', err),
   });
+
+  const handleSelect = (item) => {
+    console.log('item', item);
+
+    if (isAuthenticated) {
+      console.log('masuk');
+      // return navigate("/booking", { state: { selectedLocation: item } });
+      return router.push({
+        pathname: `/lounge-location/${item.name_location}`,
+        query: { id_location: item.id_location },
+      });
+    }
+    return router.push('/auth/login');
+  };
 
   console.log('data', data);
   if (isFetching) return <LoadingModal />;
@@ -60,7 +78,7 @@ const Home = () => {
           {data.map((item) => (
             <li
               className="hover:bg-gray-300 cursor-pointer py-4 px-6"
-              onClick={() => handleSelect(item.title)}
+              onClick={() => handleSelect(item)}
               key={item.id_location}
             >
               <a>{item.name_location}</a>
