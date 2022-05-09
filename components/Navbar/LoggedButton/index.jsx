@@ -37,14 +37,14 @@ const LoggedButton = () => {
     return;
   };
   return (
-    <div>
+    <div className="relative">
       <Popover className="relative">
         {({ open }) => (
           <>
             <Popover.Button
               className={`
                 ${open ? '' : 'text-opacity-90'}
-                group bg-orange-700 px-3 py-2 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-opacity-75`}
+                group px-3 py-2 rounded-md inline-flex items-center text-base font-medium hover:text-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-opacity-75`}
             >
               <div className="flex flex-row space-x-3 rounded-full justify-between w-fit bg-shade-FG px-8 py-2.5 border border-black-10 hover:bg-black-20">
                 <HamburgerMenu />
@@ -60,7 +60,7 @@ const LoggedButton = () => {
               leaveFrom="opacity-100 translate-y-0"
               leaveTo="opacity-0 translate-y-1"
             >
-              <Popover.Panel className="absolute z-10 max-w-sm px-4 mt-3 transform -translate-x-1/2 left-0 min-w-max w-80 sm:px-0 md:max-w-3xl">
+              <Popover.Panel className="absolute max-w-sm px-4 mt-3 transform -translate-x-1/2 left-0 min-w-max w-80 sm:px-0 md:max-w-3xl">
                 <div className="overflow-hidden rounded-2 shadow-lg ring-1 ring-shade-FG">
                   <div className="relative flex flex-col divide-y divide-black-10 bg-shade-FG">
                     {menu.map((item) => (

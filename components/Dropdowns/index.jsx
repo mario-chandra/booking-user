@@ -17,16 +17,16 @@ const Dropdowns = ({ Icon, placeholder, children, rounded = false }) => {
 
   return (
     <div>
-      <div className="w-full box-border relative h-[56px] max-w-[468px]">
+      <div className="box-border relative h-[56px] w-[468px]">
         <button
           onClick={handleClick}
           // tabIndex="0"
           className={classNames(
-            rounded ? 'rounded-full' : 'rounded-2',
+            rounded ? 'rounded-full' : 'rounded-[50px]',
             'flex w-full justify-between items-center px-4 py-4 bg-white border-2  h-full border-shade-BD'
           )}
         >
-          {Icon && <Icon className="w-6" fill="#696E76" />}
+          {/* {Icon && <Icon className="w-6" fill="#696E76" />} */}
 
           <p className=" ml-2 text-gray-700 text-sm">
             {selected ? selected : placeholder}

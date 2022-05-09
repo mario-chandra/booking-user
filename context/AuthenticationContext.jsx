@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     async function loadUserFromCookies() {
       const token = Cookies.get('token');
       if (token) {
-        instance.defaults.headers['x-admin-auth'] = token;
+        instance.defaults.headers.Authorization = `Bearer ${token}`;
         setNim(Cookies.get('NIM'));
       }
       setLoading(false);
@@ -32,6 +32,14 @@ export const AuthProvider = ({ children }) => {
         Cookies.set('NIM', res['nim']);
         Cookies.set('token', res.token);
         // instance.defaults.headers['x-admin-auth'] = res.token;
+
+        // instance.defaults.headers.common[
+        //   'Authorization'
+        // ] = `bearer ${res.token}`;
+        instance.defaults.headers.Authorization = `Bearer ${res.token}`;
+        // instance.defaults.headers.common = {
+        //   Authorization: `bearer ${res.token}`,
+        // };
         setNim(res.nim);
         notify('success', 'Login Success!!');
         window.location.pathname = '/';
@@ -46,7 +54,7 @@ export const AuthProvider = ({ children }) => {
     Cookies.remove('name');
     Cookies.remove('adminID');
     setNim(null);
-    delete instance.defaults.headers['x-admin-auth'];
+    delete instance.defaults.headers.common['Authorization'];
     window.location.pathname = '/auth/login';
   };
 
