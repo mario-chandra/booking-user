@@ -2,16 +2,10 @@ import React, { useState } from 'react';
 import ChevronUp from '@/icons/Outline/Chevron Up.svg';
 import ChevronDown from '@/icons/Outline/Chevron Down.svg';
 
-const Dropdowns = ({ data, itemId, placeholder }) => {
+const SelectLoungeLocation = ({ data, placeholder, handleSelect }) => {
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState('');
   const handleClick = () => {
     setOpen((prev) => !prev);
-  };
-
-  const handleSelect = (item) => {
-    setOpen(false);
-    setSelected(item);
   };
 
   return (
@@ -19,14 +13,11 @@ const Dropdowns = ({ data, itemId, placeholder }) => {
       <div className="box-border relative h-[56px] w-[468px]">
         <button
           onClick={handleClick}
-          // tabIndex="0"
           className={
             'rounded-full flex w-full justify-between items-center px-4 py-4 bg-white border-2  h-full bg-shade-FG border-shade-BD'
           }
         >
-          <p className=" ml-2 text-gray-700 text-sm">
-            {selected ? selected : placeholder}
-          </p>
+          <p className=" ml-2 text-gray-700 text-sm">{placeholder}</p>
           <div className=" flex justify-center">
             {open ? (
               <ChevronDown width={20} height={20} />
@@ -43,10 +34,10 @@ const Dropdowns = ({ data, itemId, placeholder }) => {
             {data.map((item) => (
               <li
                 className="hover:bg-gray-300 cursor-pointer py-4 px-6"
-                onClick={() => handleSelect(item[itemId])}
-                key={item[itemId]}
+                onClick={() => handleSelect(item)}
+                key={item.id_location}
               >
-                <a>{item.title}</a>
+                <a>{item.name_location}</a>
               </li>
             ))}
           </ul>
@@ -56,4 +47,4 @@ const Dropdowns = ({ data, itemId, placeholder }) => {
   );
 };
 
-export default Dropdowns;
+export default SelectLoungeLocation;

@@ -4,7 +4,7 @@ import AuthLayout from '@/layout/AuthLayout';
 
 const Login = () => {
   return (
-    <Content title="Login">
+    <Content title="LOGIN">
       <LoginForm />
     </Content>
   );

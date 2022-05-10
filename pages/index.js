@@ -1,13 +1,11 @@
-import Dropdowns from '@/components/Dropdowns';
 import { LoadingModal } from '@/components/Loading';
-import Navbar from '@/components/Navbar';
 import useGetQuery from '@/hooks/useGetQuery';
 import HomeLayout from '@/layout/HomeLayout';
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
-import LocationIcon from '@/icons/Fill/Location.svg';
+
 import { useRouter } from 'next/router';
 import { useAuth } from '@/context/AuthenticationContext';
+import SelectLoungeLocation from '@/components/SelectLoungeLocation';
 
 export const getServerSideProps = ({ req }) => {
   const user = req.cookies.token;
@@ -70,21 +68,11 @@ const Home = () => {
           online classes at UPH Lounge
         </h3>
 
-        <Dropdowns
+        <SelectLoungeLocation
+          data={data}
           placeholder="Select Lounge Location"
-          Icon={LocationIcon}
-          datas={data}
-        >
-          {data.map((item) => (
-            <li
-              className="hover:bg-gray-300 cursor-pointer py-4 px-6"
-              onClick={() => handleSelect(item)}
-              key={item.id_location}
-            >
-              <a>{item.name_location}</a>
-            </li>
-          ))}
-        </Dropdowns>
+          handleSelect={handleSelect}
+        />
       </div>
     </div>
   );

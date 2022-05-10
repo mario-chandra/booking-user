@@ -1,4 +1,3 @@
-import Background from '@/components/Background';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
