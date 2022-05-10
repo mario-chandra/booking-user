@@ -1,12 +1,11 @@
 import Navbar from '@/components/Navbar';
-import Image from 'next/image';
 
 const LoadingLayout = ({ children }) => {
   return (
-    <div className="relative overflow-hidden h-screen">
+    <div className="relative">
       <Navbar />
-      <div className="relative pt-nav flex justify-center items-center z-20 min-h-full">
-        {children}
+      <div className="mt-nav relative w-full h-full bg-no-repeat bg-cover bg-fixed  flex items-center justify-center min-h-[calc(100vh_-_76px)]">
+        <div className="my-10">{children}</div>
       </div>
     </div>
   );
