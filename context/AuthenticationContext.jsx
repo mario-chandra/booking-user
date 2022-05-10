@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
     async function loadUserFromCookies() {
       const token = Cookies.get('token');
       if (token) {
-        instance.defaults.headers.Authorization = `Bearer ${token}`;
+        instance.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaW0iOiIwMzA4MjE4MDAxMyIsImlhdCI6MTY0MDA5MzQ0MH0.yZAgxakgLjb7QeHB_ZFENITz66OgbWI-DB6Qa6NN5Xo`;
         setNim(Cookies.get('NIM'));
       }
       setLoading(false);
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
         // instance.defaults.headers.common[
         //   'Authorization'
         // ] = `bearer ${res.token}`;
-        instance.defaults.headers.Authorization = `Bearer ${res.token}`;
+        instance.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaW0iOiIwMzA4MjE4MDAxMyIsImlhdCI6MTY0MDA5MzQ0MH0.yZAgxakgLjb7QeHB_ZFENITz66OgbWI-DB6Qa6NN5Xo`;
         // instance.defaults.headers.common = {
         //   Authorization: `bearer ${res.token}`,
         // };

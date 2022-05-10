@@ -1,7 +1,7 @@
-import LoadingLayout from '@/layout/PageLayout';
 import Image from 'next/image';
 import ProcessingImage from '@/public/images/processing.png';
 import { Button } from '@/components/Buttons';
+import PageLayout from '@/layout/PageLayout';
 
 const BookingProcessing = () => {
   return (
@@ -30,6 +30,6 @@ const BookingProcessing = () => {
   );
 };
 
-BookingProcessing.layout = LoadingLayout;
+BookingProcessing.layout = PageLayout;
 
 export default BookingProcessing;
