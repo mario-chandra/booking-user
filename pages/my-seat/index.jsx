@@ -1,37 +1,27 @@
 import Content from '@/components/Container/Content';
-import { LoadingModal } from '@/components/Loading';
 import { Field, Group } from '@/components/List';
 import useGetQuery from '@/hooks/useGetQuery';
 import PageLayout from '@/layout/PageLayout';
-import Cookies from 'js-cookie';
 
-const Profile = () => {
+const MySeat = () => {
   const { data, isFetching } = useGetQuery(
     ['profile', 'list'],
     `/students/byEmail?email=mc80013@student.uph.edu`
   );
 
   if (isFetching) return <LoadingModal />;
-
   return (
-    <Content title="Profile">
+    <Content title="My Seat">
       <Group>
         {Object.entries(data[0]).map((entry) => {
           const [key, value] = entry;
-          if (key === 'id_program') return;
-          return (
-            <Field
-              key={key}
-              label={key === 'program_name' ? 'program' : key}
-              value={value}
-            />
-          );
+          return <Field key={key} label={key} value={value} />;
         })}
       </Group>
     </Content>
   );
 };
 
-Profile.layout = PageLayout;
+MySeat.layout = PageLayout;
 
-export default Profile;
+export default MySeat;

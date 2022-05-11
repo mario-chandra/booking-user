@@ -1,7 +1,8 @@
 import Dropdowns from '@/components/Dropdowns';
+import useGetQuery from '@/hooks/useGetQuery';
 
 const SelectInput = ({
-  data,
+  path,
   itemId = 'id',
   name,
   placeholder,
@@ -17,7 +18,7 @@ const SelectInput = ({
       <label className="label" for={name}>
         {label}
       </label>
-      <Dropdowns data={data} itemId={itemId} placeholder={placeholder} />
+      <Dropdowns path={path} itemId={itemId} placeholder={placeholder} />
     </div>
   );
 };

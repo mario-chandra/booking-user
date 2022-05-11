@@ -55,6 +55,17 @@ a {
   .disabled-checkbox {
     @apply border border-gray-300 bg-shade-BG;
   }
+
+  /* status outlined */
+  .status-processing {
+    @apply border-warning-300 bg-warning-50 text-warning-600;
+  }
+  .status-accepted {
+    @apply border-success-300 bg-success-50 text-success-600;
+  }
+  .status-decline {
+    @apply border-danger-300 bg-danger-50 text-danger-500;
+  }
 }
 
 input:checked ~ .dot {

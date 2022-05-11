@@ -5,9 +5,14 @@ import { Button } from '../Buttons';
 import DataForm from './DataForm';
 import * as Yup from 'yup';
 import majorData from '@/_mocks/major';
+import useGetQuery from '@/hooks/useGetQuery';
 
 const RegisterForm = () => {
   const { notify } = useToast();
+  const { data: program, isFetching } = useGetQuery('major', '/program', {
+    onSuccess: () => {},
+    onError: () => {},
+  });
 
   const {
     register,
@@ -67,10 +72,10 @@ const RegisterForm = () => {
           },
           {
             label: 'Program',
-            itemId: 'title',
+            itemId: 'program_name',
             name: 'program',
             placeholder: 'Select your study program',
-            data: majorData,
+            path: '/program',
             type: 'SelectInput',
           },
         ]}
