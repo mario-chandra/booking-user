@@ -3,21 +3,23 @@ import Cookies from 'js-cookie';
 import usePostQuery from '@/hooks/usePostQuery';
 import instance from '@/axios/instance';
 import useToast from '@/hooks/useToast';
+import { useRouter } from 'next/router';
 
 const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
-  const [nim, setNim] = useState(null);
+  const router = useRouter();
+  const [dataStudent, setDataStudent] = useState({});
   const [loading, setLoading] = useState(true);
   const { notify } = useToast();
-  const loginMutation = usePostQuery('/login');
+  const loginMutation = usePostQuery('/login/verify');
 
   useEffect(() => {
     async function loadUserFromCookies() {
       const token = Cookies.get('token');
       if (token) {
-        instance.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaW0iOiIwMzA4MjE4MDAxMyIsImlhdCI6MTY0MDA5MzQ0MH0.yZAgxakgLjb7QeHB_ZFENITz66OgbWI-DB6Qa6NN5Xo`;
-        setNim(Cookies.get('NIM'));
+        instance.defaults.headers.Authorization = `Bearer ${token}`;
+        setDataStudent({ ...dataStudent, email: Cookies.get('email') });
       }
       setLoading(false);
     }
@@ -29,21 +31,24 @@ export const AuthProvider = ({ children }) => {
       onSuccess: (res) => {
         console.log('res', res);
         if (res.type === 'error') return notify('error', err.message);
-        Cookies.set('NIM', res['nim']);
-        Cookies.set('token', res.token);
+        Cookies.set('email', res['email']);
+        Cookies.set('token', res.loginToken);
         // instance.defaults.headers['x-admin-auth'] = res.token;
 
         // instance.defaults.headers.common[
         //   'Authorization'
         // ] = `bearer ${res.token}`;
-        instance.defaults.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuaW0iOiIwMzA4MjE4MDAxMyIsImlhdCI6MTY0MDA5MzQ0MH0.yZAgxakgLjb7QeHB_ZFENITz66OgbWI-DB6Qa6NN5Xo`;
+        instance.defaults.headers.Authorization = `Bearer ${res.loginToken}`;
         // instance.defaults.headers.common = {
         //   Authorization: `bearer ${res.token}`,
         // };
-        setNim(res.nim);
+        setDataStudent({
+          ...data,
+          email: res['email'],
+        });
         notify('success', 'Login Success!!');
-        window.location.pathname = '/';
-        // return router;
+        // window.location.pathname = '/';
+        router.replace('/');
       },
       onError: () => notify('error', 'Sorry, Something went wrong!'),
     });
@@ -51,16 +56,21 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     Cookies.remove('token');
-    Cookies.remove('name');
-    Cookies.remove('adminID');
-    setNim(null);
+    Cookies.remove('email');
+    setDataStudent({});
     delete instance.defaults.headers.common['Authorization'];
     window.location.pathname = '/auth/login';
   };
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated: !!nim, nim, login, loading, logout }}
+      value={{
+        isAuthenticated: !!dataStudent?.email,
+        dataStudent,
+        login,
+        loading,
+        logout,
+      }}
     >
       {children}
     </AuthContext.Provider>

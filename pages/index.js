@@ -26,11 +26,13 @@ export const getServerSideProps = ({ req }) => {
 const Home = () => {
   const router = useRouter();
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, dataStudent } = useAuth();
   const { data, isFetching } = useGetQuery(['locationasds'], '/location', {
     onSuccess: (res) => console.log('success', res),
     onError: (err) => console.log('err123', err),
   });
+
+  console.log('isAuthenticated', isAuthenticated, dataStudent);
 
   const handleSelect = (item) => {
     console.log('item', item);

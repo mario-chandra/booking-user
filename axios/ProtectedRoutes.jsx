@@ -6,7 +6,7 @@ const { LoadingModal } = require('@/components/Loading');
 const ProtectedRoutes = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-  if (isLoading || (!isAuthenticated && router.pathname !== '/auth/login')) {
+  if (isLoading || (!isAuthenticated && !router.pathname.includes('/auth'))) {
     return <LoadingModal title="Loading..." />;
   }
   return children;
