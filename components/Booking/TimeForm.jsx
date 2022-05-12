@@ -1,6 +1,6 @@
 import useGetQuery from '@/hooks/useGetQuery';
 import { LoadingModal } from '../Loading';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import useBookTime from '@/hooks/useBookTime';
 import times from '@/_mocks/times';
 
@@ -13,12 +13,9 @@ const TimeForm = ({ onChange }) => {
     '/location/default/time?id_location=1'
   );
 
-  console.log('selected', selected);
-
   useEffect(() => {
     if (selected.length !== 0) {
       const splitDate = selected[0].split(' - ');
-      // const data=
       onChange({ start_time: splitDate[0], end_time: splitDate[1] });
     }
   }, [selected]);

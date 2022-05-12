@@ -4,7 +4,7 @@ import ChevronDown from '@/icons/Outline/Chevron Down.svg';
 import useGetQuery from '@/hooks/useGetQuery';
 import classNames from '@/helpers/classNames';
 
-const Dropdowns = ({ path, itemId, placeholder }) => {
+const Dropdowns = ({ r, path, itemId, itemLabel, placeholder, setValue }) => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState('');
   const handleClick = () => {
@@ -13,7 +13,8 @@ const Dropdowns = ({ path, itemId, placeholder }) => {
 
   const handleSelect = (item) => {
     setOpen(false);
-    setSelected(item);
+    setSelected(item[itemLabel]);
+    setValue(r.name, item[itemId]);
   };
 
   const { data, isFetching } = useGetQuery('asdf', path, {
@@ -56,15 +57,17 @@ const Dropdowns = ({ path, itemId, placeholder }) => {
             {isFetching ? (
               <h1 className="text-gray-800">Loading</h1>
             ) : (
-              data.map((item) => (
-                <li
-                  className="hover:bg-gray-300 cursor-pointer py-4 px-6"
-                  onClick={() => handleSelect(item[itemId])}
-                  key={item[itemId]}
-                >
-                  <a>{item[itemId]}</a>
-                </li>
-              ))
+              data.map((item) => {
+                return (
+                  <li
+                    className="hover:bg-gray-300 cursor-pointer py-4 px-6"
+                    onClick={() => handleSelect(item)}
+                    key={item[itemId]}
+                  >
+                    <a>{item[itemLabel]}</a>
+                  </li>
+                );
+              })
             )}
           </ul>
         )}

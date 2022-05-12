@@ -1,6 +1,4 @@
-// import checkStatusStyle from '@/helpers/checkStatusStyle';
 import React, { useEffect, useState } from 'react';
-import classNames from '@/helpers/classNames';
 
 const checkStatusStyle = (status) => {
   switch (status) {

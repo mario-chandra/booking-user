@@ -7,39 +7,20 @@ import { useRouter } from 'next/router';
 import { useAuth } from '@/context/AuthenticationContext';
 import SelectLoungeLocation from '@/components/SelectLoungeLocation';
 
-export const getServerSideProps = ({ req }) => {
-  const user = req.cookies.token;
-  if (!user) {
-    return {
-      redirect: {
-        destination: '/auth/login',
-        permanent: false,
-      },
-    };
-  }
-
-  return {
-    props: {},
-  };
-};
-
 const Home = () => {
   const router = useRouter();
 
-  const { isAuthenticated, dataStudent } = useAuth();
+  const { isAuthenticated } = useAuth();
   const { data, isFetching } = useGetQuery(['locationasds'], '/location', {
     onSuccess: (res) => console.log('success', res),
     onError: (err) => console.log('err123', err),
   });
-
-  console.log('isAuthenticated', isAuthenticated, dataStudent);
 
   const handleSelect = (item) => {
     console.log('item', item);
 
     if (isAuthenticated) {
       console.log('masuk');
-      // return navigate("/booking", { state: { selectedLocation: item } });
       return router.push({
         pathname: `/lounge-location/${item.name_location}`,
         query: { id_location: item.id_location },
@@ -48,7 +29,6 @@ const Home = () => {
     return router.push('/auth/login');
   };
 
-  console.log('data', data);
   if (isFetching) return <LoadingModal />;
 
   return (

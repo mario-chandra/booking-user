@@ -5,37 +5,39 @@ import { useAuth } from '@/context/AuthenticationContext';
 import Logout from '../components/Icons/Logout';
 import HamburgerMenu from '../components/Icons/HamburgerMenu';
 import User from '../components/Icons/User';
+import { useRouter } from 'next/router';
 
 const menu = [
   {
     name: 'Profile',
-    href: '/profile',
+    path: '/profile',
   },
   {
     name: 'My Seat',
-    href: '/',
+    path: '/my-seat',
   },
   {
     name: 'History',
-    href: '##',
+    path: '/history',
   },
   {
     name: 'Logout',
-    href: '##',
     icon: Logout,
   },
 ];
 
 const LoggedButton = () => {
+  const router = useRouter();
   const { logout } = useAuth();
 
-  const handleLogout = (action) => {
+  const handleDirectPage = (action, path) => {
     if (action === 'Logout') {
       logout();
       return;
     }
-    return;
+    return router.push(path);
   };
+
   return (
     <div className="relative">
       <Popover className="relative">
@@ -66,8 +68,7 @@ const LoggedButton = () => {
                     {menu.map((item) => (
                       <a
                         key={item.name}
-                        href={item.href}
-                        onClick={() => handleLogout(item.name)}
+                        onClick={() => handleDirectPage(item.name, item.path)}
                         className="flex items-center py-4 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                       >
                         <div className="flex flex-row justify-between mx-4 w-full">

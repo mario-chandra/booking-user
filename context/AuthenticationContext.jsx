@@ -9,8 +9,9 @@ const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
   const router = useRouter();
-  const [dataStudent, setDataStudent] = useState({});
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+
   const { notify } = useToast();
   const loginMutation = usePostQuery('/login/verify');
 
@@ -19,45 +20,39 @@ export const AuthProvider = ({ children }) => {
       const token = Cookies.get('token');
       if (token) {
         instance.defaults.headers.Authorization = `Bearer ${token}`;
-        setDataStudent({ ...dataStudent, email: Cookies.get('email') });
+
+        setIsAuthenticated(Boolean(token));
       }
+
       setLoading(false);
     }
     loadUserFromCookies();
-  }, []);
+  }, [loading]);
 
-  const login = async (data) => {
+  const login = async (data, path = '/') => {
     loginMutation.mutate(data, {
       onSuccess: (res) => {
         console.log('res', res);
-        if (res.type === 'error') return notify('error', err.message);
+        if (res.type === 'error') return notify('error', res.message);
         Cookies.set('email', res['email']);
         Cookies.set('token', res.loginToken);
-        // instance.defaults.headers['x-admin-auth'] = res.token;
+        setIsAuthenticated(true);
 
-        // instance.defaults.headers.common[
-        //   'Authorization'
-        // ] = `bearer ${res.token}`;
         instance.defaults.headers.Authorization = `Bearer ${res.loginToken}`;
-        // instance.defaults.headers.common = {
-        //   Authorization: `bearer ${res.token}`,
-        // };
-        setDataStudent({
-          ...data,
-          email: res['email'],
-        });
+
         notify('success', 'Login Success!!');
-        // window.location.pathname = '/';
-        router.replace('/');
+        return router.replace(path);
       },
-      onError: () => notify('error', 'Sorry, Something went wrong!'),
+      onError: () => {
+        notify('error', 'Sorry, Something went wrong1!');
+      },
+      onSettled: () => router.reload(),
     });
   };
 
   const logout = () => {
     Cookies.remove('token');
     Cookies.remove('email');
-    setDataStudent({});
     delete instance.defaults.headers.common['Authorization'];
     window.location.pathname = '/auth/login';
   };
@@ -65,8 +60,8 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        isAuthenticated: !!dataStudent?.email,
-        dataStudent,
+        isAuthenticated: isAuthenticated,
+
         login,
         loading,
         logout,

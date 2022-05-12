@@ -10,7 +10,7 @@ const nextConfig = withBundleAnalyzer({
     });
     return config;
   },
-  reactStrictMode: true,
+  strictMode: true,
   swcMinify: true,
   images: {
     domains: ['source.unsplash.com'],

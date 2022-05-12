@@ -1,10 +1,7 @@
 import ActionForm from '@/components/Booking/ActionForm';
 import DateForm from '@/components/Booking/DateForm';
 import TimeForm from '@/components/Booking/TimeForm';
-import Breadcrumbs from '@/components/Breadcrumbs';
-import { Button } from '@/components/Buttons';
-import Content from '@/components/Container/Content';
-import DatePicker from '@/components/DatePicker';
+
 import DualLayout from '@/layout/DualLayout';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
@@ -69,7 +66,6 @@ const Location = () => {
       onSuccess: (res) => console.log('res', res),
       onError: (err) => console.log('err', err),
     });
-    // return router.push('/');
   };
 
   return (
@@ -80,13 +76,6 @@ const Location = () => {
       onActionSubmit={handleSubmit}
       submitDisabled={!values[form.id]}
     />
-    // <Content title={'Booking Date'}>
-    //   {/* <Breadcrumbs /> */}
-    //   {/* <DatePicker date={date} setDate={setDate} />
-
-    //   <Button title="Login" onClick={handleSubmit(onSubmit)} /> */}
-    //  <form.form values={values} onChange={handleChange} />
-    // </Content>
   );
 };
 

@@ -14,8 +14,6 @@ const DualLayout = ({ children }) => {
               className="relative rounded-r-4 overflow-hidden"
               src={'https://source.unsplash.com/random/?city,night'}
               alt="Picture of the author"
-              // width={500}
-              // height={500}
               objectFit="cover"
               layout="fill"
             />

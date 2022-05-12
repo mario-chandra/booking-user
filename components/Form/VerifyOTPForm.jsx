@@ -1,23 +1,22 @@
 import { useAuth } from '@/context/AuthenticationContext';
-import usePostQuery from '@/hooks/usePostQuery';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import OTPInput from './components/OTPInput';
 import { Button } from '../Buttons';
-import { useRouter } from 'next/router';
 
-const VerifyOTPForm = () => {
-  const router = useRouter();
+const VerifyOTPForm = ({ token }) => {
   const [inputData, setInputData] = useState('');
   const { login } = useAuth();
   const handleVerifyOTP = () => {
-    login({
-      otp: inputData,
-      token: router.query.token,
-    });
+    login(
+      {
+        otp: inputData,
+        token,
+      },
+      '/auth/register'
+    );
   };
 
-  console.log('inputData', inputData);
   return (
     <div className="flex flex-col justify-center items-center">
       <body className="mb-8 text-black-40 break-words text-center">

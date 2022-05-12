@@ -1,6 +1,5 @@
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-// import { QueryClient, QueryClientProvider } from 'react-query';
 import { Slide, ToastContainer } from 'react-toastify';
 import '../styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,6 +22,7 @@ function MyFallbackComponent({ error, resetErrorBoundary }) {
 }
 
 function MyApp({ Component, pageProps }) {
+  const [showChild, setShowChild] = useState(false);
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -34,43 +34,53 @@ function MyApp({ Component, pageProps }) {
       },
     },
   });
+
+  useEffect(() => {
+    setShowChild(true);
+    // const jssStyle = document.querySelector('#jss-server-side');
+    // if (jssStyle) {
+    //   jssStyle.parentElement.removeChild(jssStyle);
+    // }
+  }, []);
+
+  // for handle error hydrade ui
+  if (!showChild) {
+    return null;
+  }
+
+  if (typeof window === 'undefined') {
+    return <></>;
+  }
+
   const Layout =
     Component.layout ||
     (({ children }) => {
       children;
     });
 
-  // useEffect(() => {
-  //   const jssStyle = document.querySelector('#jss-server-side');
-  //   if (jssStyle) {
-  //     jssStyle.parentElement.removeChild(jssStyle);
-  //   }
-  // }, []);
-
   return (
     <ErrorBoundary FallbackComponent={MyFallbackComponent}>
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
-          <ProtectedRoutes>
-            <Layout>
-              <Suspense fallback={<LoadingModal title="Loading ...." />}>
-                <Component {...pageProps} />
-              </Suspense>
-              <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-              />
-            </Layout>
-          </ProtectedRoutes>
+          <Layout>
+            {/* <ProtectedRoutes> */}
+            <Suspense fallback={<LoadingModal title="Loading ...." />}>
+              <Component {...pageProps} />
+            </Suspense>
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+            />
+            {/* </ProtectedRoutes> */}
+          </Layout>
         </AuthProvider>
-
         <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
       </QueryClientProvider>
     </ErrorBoundary>

@@ -1,22 +1,41 @@
 import Content from '@/components/Container/Content';
-import { LoadingModal } from '@/components/Loading';
 import { Field, Group } from '@/components/List';
-import useGetQuery from '@/hooks/useGetQuery';
 import PageLayout from '@/layout/PageLayout';
-import Cookies from 'js-cookie';
 
-const Profile = () => {
-  const { data, isFetching } = useGetQuery(
-    ['profile', 'list'],
-    `/students/byEmail?email=mc80013@student.uph.edu`
-  );
+import axios from 'axios';
 
-  if (isFetching) return <LoadingModal />;
+export const getServerSideProps = async ({ req, query }) => {
+  const email = req.cookies.email;
+  const token = req.cookies.token;
 
+  if (!email && !token) {
+    return {
+      redirect: {
+        destination: '/auth/login',
+        permanent: false,
+      },
+    };
+  }
+  const data = await axios
+    .get(
+      `${process.env.NEXT_PUBLIC_MAIN_HOST}/students/byEmail?email=${email}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    )
+    .then((res) => res.data[0])
+    .catch((err) => console.log('err123', err.response));
+
+  return {
+    props: { data },
+  };
+};
+
+const Profile = ({ data }) => {
   return (
     <Content title="Profile">
       <Group>
-        {Object.entries(data[0]).map((entry) => {
+        {Object.entries(data).map((entry) => {
           const [key, value] = entry;
           if (key === 'id_program') return;
           return (

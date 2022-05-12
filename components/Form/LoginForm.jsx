@@ -4,14 +4,12 @@ import * as Yup from 'yup';
 import DataForm from './DataForm';
 import useToast from '@/hooks/useToast';
 import { Button } from '../Buttons';
-import { useAuth } from '@/context/AuthenticationContext';
 import { useRouter } from 'next/router';
 import usePostQuery from '@/hooks/usePostQuery';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const LoginForm = () => {
   const { notify } = useToast();
-  const { isAuthenticated, user, login } = useAuth();
   const router = useRouter();
   const {
     register,
@@ -31,12 +29,11 @@ const LoginForm = () => {
   const mutation = usePostQuery('/login');
 
   const onSubmit = (data) => {
-    // login(data);
-
     mutation.mutate(data, {
       onSuccess: (res) => {
         console.log('res', res);
         notify('success', 'Success Login!!');
+
         return router.push({
           pathname: '/auth/verify-otp',
           query: { token: res.token },
@@ -46,16 +43,6 @@ const LoginForm = () => {
         notify('error', 'Sorry Something went wrong!');
       },
     });
-
-    // mutation.mutate(data, {
-    //   onSuccess: (res) => {
-    //     notify('success', res.verify);
-    //     localStorage.setItem('name', res.name);
-    //     localStorage.setItem('role', res.permission);
-    //   },
-    //   onError: (err) => notify('error', err.error),
-    // });
-    // mutation.mutate();
   };
 
   return (
@@ -68,12 +55,6 @@ const LoginForm = () => {
             placeholder: 'YourEmail@student.uph.edu',
             type: 'TextInput',
           },
-          // {
-          //   label: 'Password',
-          //   name: 'password',
-          //   placeholder: 'Write Password',
-          //   type: 'PassInput',
-          // },
         ]}
         register={register}
         errors={errors}

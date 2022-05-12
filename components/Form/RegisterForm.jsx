@@ -4,48 +4,54 @@ import { useForm } from 'react-hook-form';
 import { Button } from '../Buttons';
 import DataForm from './DataForm';
 import * as Yup from 'yup';
-import majorData from '@/_mocks/major';
-import useGetQuery from '@/hooks/useGetQuery';
+import usePostQuery from '@/hooks/usePostQuery';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 const RegisterForm = () => {
   const { notify } = useToast();
-  const { data: program, isFetching } = useGetQuery('major', '/program', {
-    onSuccess: () => {},
-    onError: () => {},
-  });
+  const router = useRouter();
+
+  const mutation = usePostQuery('/students');
 
   const {
+    setValue,
     register,
     formState: { errors },
     handleSubmit,
   } = useForm({
     resolver: yupResolver(
       Yup.object().shape({
-        student_id: Yup.string().required('Student ID is Required!'),
-        name: Yup.string().required('Student Name is Required!'),
-        class: Yup.string().required('Student Class is Required!'),
-        program: Yup.string(),
+        nim: Yup.string().required('Student ID is Required!'),
+        nama: Yup.string().required('Student Name is Required!'),
+        kelas: Yup.string().required('Student Class is Required!'),
+        id_program: Yup.number(),
       })
     ),
     defaultValues: {
-      student_id: '',
-      name: '',
-      class: '',
-      program: '',
+      nim: '',
+      nama: '',
+      kelas: '',
+      id_program: '',
     },
   });
-
+  console.log('errors', errors);
   const onSubmit = (data) => {
     console.log('data regis', data);
-    // mutation.mutate(data, {
-    //   onSuccess: (res) => {
-    //     notify('success', res.verify);
-    //     localStorage.setItem('name', res.name);
-    //     localStorage.setItem('role', res.permission);
-    //   },
-    //   onError: (err) => notify('error', err.error),
-    // });
-    // mutation.mutate();
+    mutation.mutate(
+      { ...data, email: Cookies.get('email') },
+      {
+        onSuccess: (res) => {
+          console.log('res', res);
+          notify('success', 'Register Success!');
+
+          router.replace('/');
+        },
+        onError: (err) => {
+          notify('error', 'Register Error!');
+        },
+      }
+    );
   };
 
   return (
@@ -54,26 +60,27 @@ const RegisterForm = () => {
         forms={[
           {
             label: 'Student ID',
-            name: 'student_id',
+            name: 'nim',
             placeholder: 'ex. 03082180005',
             type: 'TextInput',
           },
           {
             label: 'Name',
-            name: 'name',
+            name: 'nama',
             placeholder: 'ex. Farandi Sutanto',
             type: 'TextInput',
           },
           {
             label: 'Class',
-            name: 'class',
+            name: 'kelas',
             placeholder: 'ex. 18Ti2',
             type: 'TextInput',
           },
           {
             label: 'Program',
-            itemId: 'program_name',
-            name: 'program',
+            itemId: 'id_program',
+            itemLabel: 'program_name',
+            name: 'id_program',
             placeholder: 'Select your study program',
             path: '/program',
             type: 'SelectInput',
@@ -81,6 +88,7 @@ const RegisterForm = () => {
         ]}
         register={register}
         errors={errors}
+        setValue={setValue}
       />
       <div className="mt-12 text-center">
         <Button title="Continue" onClick={handleSubmit(onSubmit)} />
