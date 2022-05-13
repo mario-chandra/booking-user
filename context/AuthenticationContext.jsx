@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         if (res.type === 'error') return notify('error', res.message);
         Cookies.set('email', res['email']);
         Cookies.set('token', res.loginToken);
+        Cookies.set('nim', res.nim);
         setIsAuthenticated(true);
 
         instance.defaults.headers.Authorization = `Bearer ${res.loginToken}`;
@@ -46,13 +47,14 @@ export const AuthProvider = ({ children }) => {
       onError: () => {
         notify('error', 'Sorry, Something went wrong1!');
       },
-      onSettled: () => router.reload(),
+      // onSettled: () => router.reload(),
     });
   };
 
   const logout = () => {
     Cookies.remove('token');
     Cookies.remove('email');
+    Cookies.remove('nim');
     delete instance.defaults.headers.common['Authorization'];
     window.location.pathname = '/auth/login';
   };

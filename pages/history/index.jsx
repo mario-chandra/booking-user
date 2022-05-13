@@ -19,12 +19,9 @@ export const getServerSideProps = async ({ req, query }) => {
   }
 
   const data = await axios
-    .get(
-      `${process.env.NEXT_PUBLIC_MAIN_HOST}/book/filtered?nim=${nim}&status=pending`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-      }
-    )
+    .get(`${process.env.NEXT_PUBLIC_MAIN_HOST}/book/history?nim=${nim}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
     .then((res) => res.data)
     .catch((err) => console.log('err123', err.response));
 
@@ -33,7 +30,7 @@ export const getServerSideProps = async ({ req, query }) => {
   };
 };
 
-const MySeat = ({ data }) => {
+const History = ({ data }) => {
   return (
     <Content title="My Seat">
       <Group>
@@ -45,6 +42,7 @@ const MySeat = ({ data }) => {
               value={item.name_location}
               status={item.order_status}
               dateTime={{ date: item.date, time: item.time }}
+              note={item.note}
             />
           ))
         ) : (
@@ -55,6 +53,6 @@ const MySeat = ({ data }) => {
   );
 };
 
-MySeat.layout = PageLayout;
+History.layout = PageLayout;
 
-export default MySeat;
+export default History;

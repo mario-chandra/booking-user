@@ -1,16 +1,13 @@
+import { useEffect } from 'react';
 import Content from '@/components/Container/Content';
 import RegisterForm from '@/components/Form/RegisterForm';
 import AuthLayout from '@/layout/AuthLayout';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const getServerSideProps = async ({ req }) => {
   const email = req.cookies.email;
   const token = req.cookies.token;
-
-  console.log(
-    '!Boolean(email) && !Boolean(token)',
-    !Boolean(email) && !Boolean(token)
-  );
 
   if (!Boolean(email) && !Boolean(token)) {
     return {
@@ -27,7 +24,9 @@ export const getServerSideProps = async ({ req }) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     )
-    .then((res) => res.data[0]);
+    .then((response) => {
+      return response.data[0];
+    });
 
   if (Boolean(data)) {
     return {
@@ -43,7 +42,7 @@ export const getServerSideProps = async ({ req }) => {
   };
 };
 
-const Register = ({ data }) => {
+const Register = () => {
   return (
     <Content title="Input Your Data">
       <RegisterForm />

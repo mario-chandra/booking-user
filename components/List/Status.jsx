@@ -15,7 +15,11 @@ const checkStatusStyle = (status) => {
 
 const Status = ({ status }) => {
   return (
-    <div className={`${checkStatusStyle(status)} border py-2 px-4 rounded-1`}>
+    <div
+      className={`${checkStatusStyle(
+        status
+      )} first-letter:capitalize border py-2 px-4 rounded-1`}
+    >
       {status}
     </div>
   );
