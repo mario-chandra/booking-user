@@ -1,5 +1,6 @@
 import Content from '@/components/Container/Content';
 import { Field, Group } from '@/components/List';
+import changeProfileLable from '@/helpers/changeProfileLabel';
 import PageLayout from '@/layout/PageLayout';
 
 import axios from 'axios';
@@ -39,11 +40,7 @@ const Profile = ({ data }) => {
           const [key, value] = entry;
           if (key === 'id_program') return;
           return (
-            <Field
-              key={key}
-              label={key === 'program_name' ? 'program' : key}
-              value={value}
-            />
+            <Field key={key} label={changeProfileLable(key)} value={value} />
           );
         })}
       </Group>

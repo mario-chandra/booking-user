@@ -42,7 +42,7 @@ const History = ({ data }) => {
               value={item.name_location}
               status={item.order_status}
               dateTime={{ date: item.date, time: item.time }}
-              note={item.note}
+              note={{ acceptBy: item.handle_by, note: item.note }}
             />
           ))
         ) : (

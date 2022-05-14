@@ -5,6 +5,17 @@ import { DayPickerSingleDateController } from 'react-dates';
 import 'react-dates/initialize';
 import 'react-dates/lib/css/_datepicker.css';
 
+// const disabledDate = () => {
+//   if (new Date().getHours() >= 15)
+//     return [{ from: new Date(2000, 1, 1), to: add(new Date(), { days: 1 }) }];
+//   return [
+//     {
+//       from: new Date(2000, 1, 1),
+//       to: new Date(),
+//     },
+//   ];
+// };
+
 const DatePicker = ({ onChange }) => {
   const [selectedDate, setSelectedDate] = useState(dayjs().add(1, 'day'));
   const [focused, setFocused] = React.useState();
@@ -12,9 +23,15 @@ const DatePicker = ({ onChange }) => {
     onChange(dayjs(selectedDate).format(dateFormat));
   }, [selectedDate]);
 
-  const actionHandler = (res) => {
-    console.log('res', res);
+  console.log('abc', dayjs().format('HH'));
+
+  const disabledDate = () => {
+    const NOW = dayjs().format('HH');
+
+    return dayjs().add(1, 'days');
   };
+
+  // console.log('date', dayjs(selectedDate).format(dateFormat));
 
   return (
     <DayPickerSingleDateController
@@ -24,16 +41,15 @@ const DatePicker = ({ onChange }) => {
       // withFullScreenPortal
       // numberOfMonths={1}
 
-      hideKeyboardShortcutsPanel
+      // hideKeyboardShortcutsPanel
       date={selectedDate}
       onDateChange={(date) => setSelectedDate(date)}
       focused={focused}
       onFocusChange={({ focused }) => setFocused(focused)}
       id="date"
-      onOutsideClick={actionHandler}
-      onPrevMonthClick={actionHandler}
-      onNextMonthClick={actionHandler}
-      numberOfMonths={1}
+      // isDayBlocked={disabledDate}
+      // numberOfMonths={1}
+      // minDate={disabledDate }}
     />
   );
 };
