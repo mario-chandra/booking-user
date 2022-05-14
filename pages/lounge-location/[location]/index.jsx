@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Cookies from 'js-cookie';
 import usePostQuery from '@/hooks/usePostQuery';
+import useToast from '@/hooks/useToast';
 
 const STEPS = [
   {
@@ -31,6 +32,9 @@ const STEPS = [
 
 const Location = () => {
   const router = useRouter();
+  const { notify } = useToast();
+  // sementara pakai state err karena requestnya looping
+  const [errMsg, setErrMsg] = useState(null);
   const [currStep, setCurrStep] = useState(0);
   const [values, setValues] = useState(() => {
     return {
@@ -39,6 +43,8 @@ const Location = () => {
   });
   const mutation = usePostQuery('/book');
   const form = STEPS[currStep];
+
+  console.log('values', values);
 
   const handleChange = (value) =>
     setValues((curr) => ({ ...curr, [form.id]: value }));
@@ -52,20 +58,47 @@ const Location = () => {
       return setCurrStep((curr) => curr + 1);
     }
 
-    // do submission
-    const data = {
-      id_location: router.query.id_location,
-      date: values.date,
-      start_time: values.time.start_time,
-      end_time: values.time.end_time,
-      oder_status: 'pending',
-      nim: Cookies.get('NIM'),
-    };
-    console.log('values123', data);
-    mutation.mutate(data, {
-      onSuccess: (res) => console.log('res', res),
-      onError: (err) => console.log('err', err),
+    // mutation.mutate(data, {
+    //   onSuccess: (res) => console.log('res', res),
+    //   onError: (err) => console.log('err', err),
+    // });
+
+    values.time.forEach((item) => {
+      const data = {
+        id_location: router.query.id_location,
+        date: values.date,
+        id_time: item,
+        nim: Cookies.get('nim'),
+      };
+      mutation.mutate(data, {
+        onSuccess: (res) => {
+          console.log('res88', res);
+          console.log('res.err', res.err);
+          if (res.errMsg) return setErrMsg(res.err);
+        },
+        onError: (err) => co8nsole.log('err888', err),
+      });
     });
+
+    if (errMsg) return notify('error', errMsg);
+
+    notify('success', 'Successfully booked the seat');
+
+    // return router.push('/booking/processing');
+    // do submission
+    // const data = {
+    //   id_location: router.query.id_location,
+    //   date: values.date,
+    //   start_time: values.time.start_time,
+    //   end_time: values.time.end_time,
+    //   oder_status: 'pending',
+    //   nim: Cookies.get('NIM'),
+    // };
+    // console.log('values123', data);
+    // mutation.mutate(data, {
+    //   onSuccess: (res) => console.log('res', res),
+    //   onError: (err) => console.log('err', err),
+    // });
   };
 
   return (

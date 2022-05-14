@@ -2,8 +2,15 @@ import Image from 'next/image';
 import ProcessingImage from '@/public/images/processing.png';
 import { Button } from '@/components/Buttons';
 import PageLayout from '@/layout/PageLayout';
+import { useRouter } from 'next/router';
 
 const BookingProcessing = () => {
+  const router = useRouter();
+
+  const onClick = () => {
+    return router.push('/my-seat');
+  };
+
   return (
     <div className="flex flex-col items-center">
       <Image
@@ -25,7 +32,7 @@ const BookingProcessing = () => {
           you as soon as possible
         </p>
       </div>
-      <Button title="Continue" />
+      <Button title="Continue" onClick={onClick} />
     </div>
   );
 };

@@ -2,6 +2,7 @@ import classNames from '@/helpers/classNames';
 import { CheckIcon } from '@heroicons/react/solid';
 
 const Checkbox = ({ title, isChecked, onClick, isDisabled }) => {
+  // console.log('isDisabled', (isDisabled = true));
   return (
     <div
       className={classNames(

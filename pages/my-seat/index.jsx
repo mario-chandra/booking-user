@@ -20,7 +20,7 @@ export const getServerSideProps = async ({ req, query }) => {
 
   const data = await axios
     .get(
-      `${process.env.NEXT_PUBLIC_MAIN_HOST}/book/filtered?nim=${nim}&status=pending`,
+      `${process.env.NEXT_PUBLIC_MAIN_HOST}/book/filtered?nim=${nim}&status=pending&page=0`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }

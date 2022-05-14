@@ -69,7 +69,7 @@ const LoggedButton = () => {
                       <a
                         key={item.name}
                         onClick={() => handleDirectPage(item.name, item.path)}
-                        className="flex items-center py-4 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
+                        className="flex cursor-pointer items-center py-4 transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50"
                       >
                         <div className="flex flex-row justify-between mx-4 w-full">
                           <p className="text-sm font-medium text-gray-500">

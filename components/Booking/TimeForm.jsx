@@ -3,20 +3,21 @@ import { LoadingModal } from '../Loading';
 import { useEffect } from 'react';
 import useBookTime from '@/hooks/useBookTime';
 import times from '@/_mocks/times';
+import dayjs from 'dayjs';
 
 const { default: Checkbox } = require('../Checkbox');
 
-const TimeForm = ({ onChange }) => {
+const TimeForm = ({ values, onChange }) => {
   const { selected, handleSelect } = useBookTime();
   const { data, isFetching } = useGetQuery(
     ['booking', 'time', 'list'],
-    '/location/default/time?id_location=1'
+    `/location/time?id_location=${values.id_location}&date=${values.date}`
   );
 
   useEffect(() => {
     if (selected.length !== 0) {
-      const splitDate = selected[0].split(' - ');
-      onChange({ start_time: splitDate[0], end_time: splitDate[1] });
+      // const splitDate = selected[0].split(' - ');
+      onChange(selected);
     }
   }, [selected]);
 
@@ -24,14 +25,15 @@ const TimeForm = ({ onChange }) => {
 
   return (
     <div class="w-full grid grid-rows-6 grid-cols-time-chip grid-flow-col gap-5 ">
-      {times.map((item) => {
-        const isItemSelected = selected.indexOf(item.time) !== -1;
+      {data.map((item) => {
+        const isItemSelected = selected.indexOf(item.id_time) !== -1;
 
         return (
           <Checkbox
             isChecked={isItemSelected}
+            isDisabled={Boolean(item.is_disabled)}
             title={item.time}
-            onClick={(event) => handleSelect(event, item.time)}
+            onClick={(event) => handleSelect(event, item.id_time)}
           />
         );
       })}

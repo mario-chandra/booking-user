@@ -32,7 +32,7 @@ export const getServerSideProps = async ({ req, query }) => {
 
 const History = ({ data }) => {
   return (
-    <Content title="My Seat">
+    <Content title="history">
       <Group>
         {data ? (
           data.map((item) => (
