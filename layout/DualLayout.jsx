@@ -1,18 +1,21 @@
 import Breadcrumbs from '@/components/Breadcrumbs';
 import Navbar from '@/components/Navbar';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 const DualLayout = ({ children }) => {
+  const router = useRouter();
+  console.log('router 12', router.query);
   return (
-    <div className="relative w-[90%] mx-auto">
+    <div className="h-screen relative">
       <Navbar />
-      <div className="mt-nav flex items-center relative h-full bg-success-BG">
-        <div className="mt-8 space-y-8 h-[calc(100%_-_56px_-_56px)] w-6/12">
+      <div className="px-8 flex pt-nav items-center justify-center h-full bg-success-BG">
+        <div className="space-y-8 hidden lg:inline-block w-6/12">
           <Breadcrumbs />
-          <div className="relative h-[calc(100vh_-_56px_-_56px_-_32px_-_32px_-_32px)]">
+          <div className="relative h-[calc(100vh_-_56px_-_56px_-_32px_-_32px)]">
             <Image
               className="relative rounded-r-4 overflow-hidden"
-              src={'https://source.unsplash.com/random/?city,night'}
+              src={router.query.image}
               alt="Picture of the author"
               objectFit="cover"
               layout="fill"
@@ -20,7 +23,7 @@ const DualLayout = ({ children }) => {
           </div>
         </div>
 
-        <div className="flex w-6/12">{children}</div>
+        <div className="flex w-6/12 items-center">{children}</div>
       </div>
     </div>
   );

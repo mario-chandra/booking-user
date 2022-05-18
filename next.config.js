@@ -13,7 +13,7 @@ const nextConfig = withBundleAnalyzer({
   strictMode: true,
   swcMinify: true,
   images: {
-    domains: ['source.unsplash.com'],
+    domains: ['source.unsplash.com', 'uph-booking-image.s3.amazonaws.com'],
   },
   // i18n: {
   //   locales: ['in'],

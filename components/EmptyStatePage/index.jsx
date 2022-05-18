@@ -1,18 +1,16 @@
-import Image from 'next/image';
+import Content from '../Container/Content';
 import ProcessingImage from '@/public/images/processing.png';
-import { Button } from '@/components/Buttons';
-import PageLayout from '@/layout/PageLayout';
 import { useRouter } from 'next/router';
+import { Button } from '../Buttons';
+import Image from 'next/image';
 
-const BookingProcessing = () => {
+const EmptyStatePage = ({ title, btnTitle, contentTitle }) => {
   const router = useRouter();
-
-  const onClick = () => {
-    return router.push('/my-seat');
+  const handleClick = () => {
+    return router.push('/');
   };
-
   return (
-    <div className="flex flex-col items-center">
+    <Content title={title}>
       <div className="mt-20 w-[340px] h-[340px]">
         <Image
           // className="mt-20"
@@ -25,8 +23,8 @@ const BookingProcessing = () => {
         />
       </div>
       <div className="my-16 flex flex-col items-center justify-center text-black">
-        <h1 className="mb-3  text-xxl-1 font-bold text-primary-500">
-          Your Booking is on Processing
+        <h1 className="mb-3  text-xl-1 font-semibold text-primary-500">
+          {contentTitle}
         </h1>
         <p className="text-lg-3 font-medium text-primary-300">
           Please kindly wait, we will notify
@@ -35,11 +33,9 @@ const BookingProcessing = () => {
           you as soon as possible
         </p>
       </div>
-      <Button title="Continue" onClick={onClick} />
-    </div>
+      <Button title={btnTitle} onClick={handleClick} />
+    </Content>
   );
 };
 
-BookingProcessing.layout = PageLayout;
-
-export default BookingProcessing;
+export default EmptyStatePage;

@@ -18,6 +18,8 @@ const TimeForm = ({ values, onChange }) => {
     if (selected.length !== 0) {
       // const splitDate = selected[0].split(' - ');
       onChange(selected);
+    } else {
+      onChange(null);
     }
   }, [selected]);
 

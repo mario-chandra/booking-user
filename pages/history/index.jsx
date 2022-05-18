@@ -1,11 +1,11 @@
 import Content from '@/components/Container/Content';
+import EmptyStatePage from '@/components/EmptyStatePage';
 import { Field, Group } from '@/components/List';
 
 import PageLayout from '@/layout/PageLayout';
 import axios from 'axios';
 
 export const getServerSideProps = async ({ req, query }) => {
-  // const email = req.cookies.email;
   const token = req.cookies.token;
   const nim = req.cookies.nim;
 
@@ -31,23 +31,30 @@ export const getServerSideProps = async ({ req, query }) => {
 };
 
 const History = ({ data }) => {
+  console.log('data', data);
+
+  if (!Boolean(data.length))
+    return (
+      <EmptyStatePage
+        title="History"
+        btnTitle="Find New"
+        contentTitle="History is still empty"
+      />
+    );
+
   return (
-    <Content title="history">
+    <Content title="History">
       <Group>
-        {data ? (
-          data.map((item) => (
-            <Field
-              key={item.order_id}
-              label={`ID: ${item.order_id}`}
-              value={item.name_location}
-              status={item.order_status}
-              dateTime={{ date: item.date, time: item.time }}
-              note={{ acceptBy: item.handle_by, note: item.note }}
-            />
-          ))
-        ) : (
-          <p className="error-text">Sorry something went wrong!!</p>
-        )}
+        {data.map((item) => (
+          <Field
+            key={item.order_id}
+            label={`ID: ${item.order_id}`}
+            value={`${item.name_location} - ${item.spot_name}`}
+            status={item.order_status}
+            dateTime={{ date: item.date, time: item.time }}
+            note={{ acceptBy: item.handle_by, note: item.note }}
+          />
+        ))}
       </Group>
     </Content>
   );

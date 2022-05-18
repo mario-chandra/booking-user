@@ -29,10 +29,10 @@ const RegisterForm = () => {
       })
     ),
     defaultValues: {
-      nim: '',
-      nama: '',
-      kelas: '',
-      id_program: '',
+      nim: null,
+      nama: null,
+      kelas: null,
+      id_program: null,
     },
   });
   console.log('errors', errors);
@@ -43,11 +43,13 @@ const RegisterForm = () => {
       {
         onSuccess: (res) => {
           console.log('res', res);
+          Cookies.set('nim', data.nim);
           notify('success', 'Register Success!');
 
           router.replace('/');
         },
         onError: (err) => {
+          console.log('err', err);
           notify('error', 'Register Error!');
         },
       }

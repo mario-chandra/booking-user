@@ -37,7 +37,10 @@ const SelectLoungeLocation = ({ data, placeholder, handleSelect }) => {
                 onClick={() => handleSelect(item)}
                 key={item.id_location}
               >
-                <a>{item.name_location}</a>
+                <div className="w-full flex justify-between">
+                  <a>{item.name_location}</a>
+                  <p>{item.spot_name}</p>
+                </div>
               </li>
             ))}
           </ul>

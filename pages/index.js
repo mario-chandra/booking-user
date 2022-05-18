@@ -23,7 +23,7 @@ const Home = () => {
       console.log('masuk');
       return router.push({
         pathname: `/lounge-location/${item.name_location}`,
-        query: { id_location: item.id_location },
+        query: { id_location: item.id_location, image: item.image },
       });
     }
     return router.push('/auth/login');

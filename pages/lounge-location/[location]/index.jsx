@@ -49,8 +49,6 @@ const Location = () => {
   const handleChange = (value) =>
     setValues((curr) => ({ ...curr, [form.id]: value }));
 
-  console.log('router', router.query.location);
-
   const handleSubmit = () => {
     if (currStep + 1 < STEPS.length) {
       console.log('opps');
@@ -73,16 +71,14 @@ const Location = () => {
       mutation.mutate(data, {
         onSuccess: (res) => {
           console.log('res88', res);
-          console.log('res.err', res.err);
-          if (res.errMsg) return setErrMsg(res.err);
+          console.log('res.err88', res.err);
+          if (res.type === 'error') return notify('error', res.message);
+          notify('success', 'Successfully booked the seat');
+          router.replace('/booking/processing');
         },
-        onError: (err) => co8nsole.log('err888', err),
+        onError: (err) => notify('error', 'Sorry, Something went wrong!'),
       });
     });
-
-    if (errMsg) return notify('error', errMsg);
-
-    notify('success', 'Successfully booked the seat');
 
     // return router.push('/booking/processing');
     // do submission

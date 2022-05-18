@@ -2,13 +2,13 @@ import classNames from '@/helpers/classNames';
 import { CheckIcon } from '@heroicons/react/solid';
 
 const Checkbox = ({ title, isChecked, onClick, isDisabled }) => {
-  // console.log('isDisabled', (isDisabled = true));
   return (
     <div
+      onClick={onClick}
       className={classNames(
         isDisabled && 'disabled-checkbox',
         isChecked ? 'checked-input' : 'unchecked-input',
-        'flex relative items-center p-3'
+        'flex relative items-center p-3 cursor-pointer'
       )}
     >
       <input
@@ -16,9 +16,7 @@ const Checkbox = ({ title, isChecked, onClick, isDisabled }) => {
         checked={isChecked}
         className="absolute opacity-0 w-6 h-6 border rounded-sm focus:outline-none transition duration-200 align-top bg-no-repeat bg-center bg-contain float-left"
         type="checkbox"
-        // value=""
-        id="flexCheckDefault"
-        onClick={onClick}
+        // onClick={onClick}
       />
       <div
         className={classNames(
@@ -29,15 +27,14 @@ const Checkbox = ({ title, isChecked, onClick, isDisabled }) => {
       >
         <CheckIcon className="icon hidden fill-current  w-4 h-4 text-info-600 pointer-events-none " />
       </div>
-      <label
+      <p
         className={classNames(
           isDisabled ? 'text-gray-300' : 'text-gray-700',
-          'form-check-label text-md-3 font-medium text-center inline-block'
+          'form-check-label text-md-3 font-medium text-center'
         )}
-        for="flexCheckDefault"
       >
         {title}
-      </label>
+      </p>
     </div>
   );
 };

@@ -24,7 +24,10 @@ export const getServerSideProps = async ({ req, query }) => {
         headers: { Authorization: `Bearer ${token}` },
       }
     )
-    .then((res) => res.data[0])
+    .then((res) => {
+      console.log('res', res.data[0]);
+      return res.data[0];
+    })
     .catch((err) => console.log('err123', err.response));
 
   return {
