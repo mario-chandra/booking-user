@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import OTPInput from './components/OTPInput';
 import { Button } from '../Buttons';
 
-const VerifyOTPForm = ({ token }) => {
+const VerifyOTPForm = ({ token, emailTitle }) => {
   const [inputData, setInputData] = useState('');
   const { login } = useAuth();
   const handleVerifyOTP = () => {
@@ -19,9 +19,10 @@ const VerifyOTPForm = ({ token }) => {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <body className="mb-8 text-black-40 break-words text-center">
-        Enter the verification code that send to <br /> {Cookies.get('name')}
-      </body>
+      <p className="mb-8 text-black-40 break-words text-center text-primary-300">
+        Enter the verification code that send to <br /> {emailTitle}
+      </p>
+
       <OTPInput isNumberInput autoFocus length={6} onChangeOTP={setInputData} />
 
       <div className="mt-8 mb-6">

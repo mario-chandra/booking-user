@@ -31,12 +31,12 @@ const LoginForm = () => {
   const onSubmit = (data) => {
     mutation.mutate(data, {
       onSuccess: (res) => {
-        console.log('res', res);
+        console.log('res', res, data);
         notify('success', 'Success Login!!');
 
         return router.push({
           pathname: '/auth/verify-otp',
-          query: { token: res.token },
+          query: { token: res.token, email: data.email },
         });
       },
       onError: () => {

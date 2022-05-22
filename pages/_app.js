@@ -37,10 +37,10 @@ function MyApp({ Component, pageProps }) {
 
   useEffect(() => {
     setShowChild(true);
-    // const jssStyle = document.querySelector('#jss-server-side');
-    // if (jssStyle) {
-    //   jssStyle.parentElement.removeChild(jssStyle);
-    // }
+    const jssStyle = document.querySelector('#jss-server-side');
+    if (jssStyle) {
+      jssStyle.parentElement.removeChild(jssStyle);
+    }
   }, []);
 
   // for handle error hydrade ui
@@ -87,12 +87,12 @@ function MyApp({ Component, pageProps }) {
   );
 }
 
-MyApp.getInitialProps = async ({ Component, ctx }) => {
-  // ctx.store.dispatch({})
-  const pageProps = Component.getInitialProps
-    ? await Component.getInitialProps(ctx)
-    : {};
-  return { pageProps };
-};
+// MyApp.getInitialProps = async ({ Component, ctx }) => {
+//   // ctx.store.dispatch({})
+//   const pageProps = Component.getInitialProps
+//     ? await Component.getInitialProps(ctx)
+//     : {};
+//   return { pageProps };
+// };
 
 export default MyApp;

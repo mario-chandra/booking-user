@@ -4,6 +4,7 @@ import AuthLayout from '@/layout/AuthLayout';
 
 export const getServerSideProps = async ({ req, query }) => {
   const token = query?.token;
+  const email = query?.email;
   if (token === null || token === undefined) {
     return {
       redirect: {
@@ -14,14 +15,14 @@ export const getServerSideProps = async ({ req, query }) => {
   }
 
   return {
-    props: { token },
+    props: { token, email },
   };
 };
 
-const VerifyOTP = ({ token }) => {
+const VerifyOTP = ({ token, email }) => {
   return (
     <Content title="Verify Account">
-      <VerifyOTPForm token={token} />
+      <VerifyOTPForm emailTitle={email} token={token} />
     </Content>
   );
 };

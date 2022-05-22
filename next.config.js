@@ -10,8 +10,11 @@ const nextConfig = withBundleAnalyzer({
     });
     return config;
   },
+  eslint: {
+    dirs: ['pages', 'utils', 'layout'], // Only run ESLint on the 'pages' and 'utils' directories during production builds (next build)
+  },
   strictMode: true,
-  swcMinify: true,
+  // swcMinify: true,
   images: {
     domains: ['source.unsplash.com', 'uph-booking-image.s3.amazonaws.com'],
   },
