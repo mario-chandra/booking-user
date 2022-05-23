@@ -1,0 +1,17 @@
+{
+  "/_app": "pages/_app.js",
+  "/api/hello": "pages/api/hello.js",
+  "/auth/login": "pages/auth/login.html",
+  "/booking/processing": "pages/booking/processing.html",
+  "/": "pages/index.html",
+  "/lounge-location/[location]": "pages/lounge-location/[location].html",
+  "/_error": "pages/_error.js",
+  "/auth/register": "pages/auth/register.js",
+  "/history": "pages/history.js",
+  "/lounge-location": "pages/lounge-location.js",
+  "/my-seat": "pages/my-seat.js",
+  "/profile": "pages/profile.js",
+  "/auth/verify-otp": "pages/auth/verify-otp.js",
+  "/_document": "pages/_document.js",
+  "/404": "pages/404.html"
+}
